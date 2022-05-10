@@ -7,6 +7,7 @@ import $ from "jquery";
 import { addContact } from "../Users/UsersChatDB";
 import SignOffModal from "./SignOffModal";
 import "./ContactsBar.css";
+import AddContactModal from "./AddContactModal";
 
 // create search contact button
 function SearchAwareToggle({ children, eventKey, callback }) {
@@ -26,24 +27,6 @@ function SearchAwareToggle({ children, eventKey, callback }) {
     );
 }
 
-// create add contact button
-function AddContactAwareToggle({ children, eventKey, callback }) {
-
-    const decoratedOnClick = useAccordionButton(
-        eventKey,
-        () => callback && callback(eventKey),
-    );
-
-    return (
-        <button
-            type="button"
-            className="btn btn-outline-secondary"
-            onClick={decoratedOnClick}>
-            <i className="bi bi-person-plus-fill"></i>
-        </button>
-    );
-}
-
 function validateAddContactKeyUp(username, talkWith) {
     var errorMsg = validateAddContact(username, talkWith);
     if (errorMsg === "") {
@@ -58,28 +41,6 @@ function validateAddContactKeyUp(username, talkWith) {
 }
 
 function ContactsBar(props) {
-
-    $(document).ready(function (event) {
-
-        // click enter handler (search contact)
-        $("#add-contact-input").unbind().bind("keypress", function (e) {
-            if (e.keyCode === 13) {
-                document.getElementById("add_contact_btn").click();
-            }
-        })
-
-        // search contact button handler
-        $("#add_contact_btn").unbind("click").on("click", function () {
-            let error = validateAddContact(props.myUser, $("#add-contact-input").val());
-            if (error === "") {
-                addContact(props.myUser, $("#add-contact-input").val());
-                addContact($("#add-contact-input").val(), props.myUser);
-                props.refreshChat();
-                searchContact();
-                $("#add-contact-input").val("");
-            }
-        });
-    })
 
     const [isSignOffModelOpen, setIsSignOffModelOpen] = useState(false);
 
@@ -99,6 +60,15 @@ function ContactsBar(props) {
         setIsProfilePicModelOpen(false);
     };
 
+    const [isAddContactModelOpen, setAddContactModelOpen] = useState(false);
+
+    const showAddContactModal = () => {
+        setAddContactModelOpen(true);
+    };
+    const hideAddContactModal = () => {
+        setAddContactModelOpen(false);
+    };
+
     const addContactRef = useRef("");
 
     useEffect(() => {
@@ -115,13 +85,19 @@ function ContactsBar(props) {
         <>
             <SignOffModal isOpen={isSignOffModelOpen} hideModal={hideSignOffModal} setUsername={props.setUsername}></SignOffModal>
             <ProfilePicModal isOpen={isProfilePicModelOpen} hideModal={hideProfilePicModal} myUser={props.myUser}></ProfilePicModal>
+            <AddContactModal isOpen={isAddContactModelOpen} hideModal={hideAddContactModal} myUser={props.myUser}></AddContactModal>
             <div className="icons_item">
                 <Accordion>
                     <Card>
                         <Card.Header>
                             <div className="d-flex justify-content-between">
                                 <img id="profile_pic" src={getUserPicture(props.myUser)} onClick={showProfilePicfModal} className="rounded-circle user_img_msg" alt="profile" />
-                                <AddContactAwareToggle eventKey="1"></AddContactAwareToggle>
+                                <button
+                                    type="button"
+                                    className="btn btn-outline-secondary"
+                                    onClick={showAddContactModal}>
+                                    <i className="bi bi-person-plus-fill"></i>
+                                </button>
                                 <SearchAwareToggle eventKey="0"></SearchAwareToggle>
                                 <button type="button" className="btn btn-outline-secondary" onClick={showSignOffModal}>
                                     <i className="bi bi-power"></i>

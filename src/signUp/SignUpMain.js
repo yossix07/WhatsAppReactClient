@@ -52,7 +52,7 @@ function SignUp(props) {
 
 
   $(document).ready(function () {
-    $("#signUpForm").on("submit", function (event) {
+    $("#signUpForm").unbind("submit").on("submit", function (event) {
       event.preventDefault();
       if (name.current.value && validateUsername(name.current.value) && pass.current.value && rePass.current.value
         && validatePassword(pass.current.value, rePass.current.value) && validateRepeatedPassword(pass.current.value, rePass.current.value)
