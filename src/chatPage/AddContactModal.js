@@ -6,7 +6,7 @@ import Form from 'react-bootstrap/Form'
 import { Container } from "react-bootstrap";
 import "./AddContactModal.css";
 import $ from "jquery";
-import { sendChatInvitationAsync } from "../Users/DBQuerys";
+import { sendChatInvitationAsync, addContactAsync } from "../Users/DBQuerys";
 import AddContactErrorModal from "./chatWindow/AddContactErrorModal";
 
 function AddContactModal(props) {
@@ -24,8 +24,8 @@ function AddContactModal(props) {
         $("#addContactForm").unbind("submit").on("submit", function (event) {
             event.preventDefault();
             if (sendChatInvitationAsync(props.myUser, contactUsername.current.value, contactServer.current.value) == 201) {
-                // TODO - if succed and add contact with his nickname to contacts list
                 console.log("good");
+                addContactAsync(props.myUser, contactUsername.current.value, contactNickname.current.value, contactServer.current.value);
             } else {
                 console.log("bad");
                 showError();
@@ -47,7 +47,6 @@ function AddContactModal(props) {
     };
 
 
-    
     return (
         <>
         <AddContactErrorModal isOpen={isErrorModelOpen} hideErrorModal={hideError} hideModal={props.hideModal}> </AddContactErrorModal>

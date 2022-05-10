@@ -1,32 +1,3 @@
-
-// export async function getContactsAsync(username) {
-//     const response = 
-//       fetch("http://localhost:5008/WeatherForecast", { 
-//         headers: {'Content-Type': 'application/json'}
-//       }).then(res => res.json().then(data => (
-//         {
-//           data: data,
-//           status: res.status
-//         })
-//         ))
-//     console.log((await response).data)
-// }
-
-
-// export async function getContactsAsync(username) {
-//   const response = 
-//     fetch("http://localhost:5008/WeatherForecast", { 
-//       headers: {'Content-Type': 'application/json'}
-//     }).then(res => res.json().then(data => (
-//       {
-//         data: data,
-//         status: res.status
-//       })
-//       ))
-//   console.log((await response).data)
-// }
-
-
 const port = 5008;
 const urlPrefix = "http://localhost:" + port + "/api";
 
@@ -37,7 +8,6 @@ async function getJsonFromUrl(url) {
       headers: { 'Content-Type': 'application/json' }
     }).then(res => res.json().then(data => (
       {
-
         data: data,
         status: res.status
       })
@@ -52,8 +22,23 @@ export async function getContactsAsync() {
   console.log(contactsJson);
 }
 
-export async function addContactAsync() {
-  
+// get the user's contacts
+export async function addContactAsync(username, contactUsername ,contactNickname, contactServer) {
+  const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ "myUsername": username, "id": contactUsername, "name": contactNickname, "server": contactServer })
+  };
+  const response = await fetch(urlPrefix + "/contacts", requestOptions).then(res => res.json().then(data => (
+    {
+      data: data,
+      status: res.status
+    })
+  ));
+
+  const s = response.status;
+  console.log("status is: " + s);
+  return s;
 }
 
 // sends a new chat invitation
@@ -65,11 +50,10 @@ export async function sendChatInvitationAsync(InvitationSender, InvitationRecive
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ "from": InvitationSender, "to": InvitationReciver, "server": "localhost" + port})
+    body: JSON.stringify({ "from": InvitationSender, "to": InvitationReciver, "server": "localhost" + port })
   };
   const response = await fetch("http://" + ReciverServer + "/api/invitations", requestOptions).then(res => res.json().then(data => (
     {
-
       data: data,
       status: res.status
     })
