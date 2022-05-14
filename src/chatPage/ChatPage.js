@@ -1,11 +1,10 @@
 import { Tab, Col, Row } from "react-bootstrap";
 import "./Chat.css";
-import { getUserPicture, getUserNickname } from "../Users/UsersDB";
-import { getUserChats } from "../Users/UsersChatDB";
+import { getContactsAsync } from "../Users/DBQuerys";
 import ContactsBar from "./ContactsBar";
 import ChatWindow from "./chatWindow/ChatWindow";
 import ContactListResult from "./chatWindow/ContactListResults";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 function Chat(props) {
@@ -21,48 +20,58 @@ function Chat(props) {
         }
     }
 
-    var contacts = getUserChats(props.user);
+    useEffect(()=> { 
+        async function fetchContacts() {
+            setcontactsList(await getContactsAsync(props.token));
+        }
+        fetchContacts();
 
-    const [contactsList, setcontactsList] = useState(contacts);
+        console.log("in use effect: ")
+        console.log(contactsList);
+        
+    }, []);
+
+    const [contactsList, setcontactsList] = useState(null);
 
     // search contacts' filter by nickname
     function doSearch(query) {
-        if (contacts) {
-            setcontactsList(contacts.filter((contact) => getUserNickname(contact.chatWith).toLowerCase().includes(query.toLowerCase())));
+        if (contactsList) {
+            setcontactsList(contactsList.filter((contact) => contact.name.toLowerCase().includes(query.toLowerCase())));
         }
     }
 
-    var chatWindows;
+    // var chatWindows;
 
-    // create each contact it's chat window
-    if (getUserChats(props.user)) {
-        chatWindows = getUserChats(props.user).map((chat, key) => {
-            return (
-                <ChatWindow
-                    link={chat.chatWith}
-                    image={getUserPicture(chat.chatWith)}
-                    nickname={getUserNickname(chat.chatWith)}
-                    user={chat.chatWith}
-                    myUser={props.user}
-                    refreshChat={refreshChat}
-                    key={key}>
-                </ChatWindow>
-            );
-        })
-    }
+    // // create each contact it's chat window
+    // if (contactsList) {
+    //     chatWindows = Array.from(contactsList).map((contact, key) => {
+    //         return (
+    //             <ChatWindow
+    //                 link={contact.id}
+    //                 token = {props.token}
+    //                 image={null}
+    //                 nickname={contact.name}
+    //                 contactName={contact.id}
+    //                 myUser={"a"}
+    //                 refreshChat={refreshChat}
+    //                 key={key}>
+    //             </ChatWindow>
+    //         );
+    //     })
+    // }
 
     return (
         <div>
             <Tab.Container id="list-group-tabs" defaultActiveKey="#def">
                 <Row>
                     <Col xs={4} sm={4} md={4} lg={4} xl={3} className="vh-100">
-                        <ContactsBar myUser={props.user} setUsername={props.setUsername} refreshChat={refreshChat} doSearch={doSearch}></ContactsBar>
+                        <ContactsBar myUser={props.user} refreshChat={refreshChat} doSearch={doSearch} setToken={props.setToken}></ContactsBar>
                         <ContactListResult user={props.user} contacts={contactsList}>
                         </ContactListResult>
                     </Col>
                     <Col xs={8} sm={8} md={8} lg={8} xl={9}>
                         <Tab.Content>
-                            {chatWindows}
+                            {/* {chatWindows} */}
                         </Tab.Content>
                     </Col>
                 </Row>
