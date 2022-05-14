@@ -1,22 +1,25 @@
 import { ListGroup } from "react-bootstrap";
 import Contact from "../Contact";
-import { lastMassageGenerator, lastMassageGeneratorTime } from "../../Users/UsersChatDB";
-import { getUserPicture, getUserNickname } from "../../Users/UsersDB";
+import profilePic from "../../Users/ProfilePictures/DefalutProfilePic.jpg"
 
 
 function ContactListResult(props) {
+
+    console.log("in ContactListResult:");
+    console.log(props.contacts);
 
     var contactList;
 
     // get all contacts of user
     if (props.contacts) {
-        contactList = props.contacts.map((chat, key) => {
+        contactList = Array.from(props.contacts).map((contact, key) => {
             return (
-                <Contact image={getUserPicture(chat.chatWith)}
-                    link={chat.chatWith}
-                    usernick={getUserNickname(chat.chatWith)}
-                    lastTime={lastMassageGeneratorTime(props.user, chat.chatWith)}
-                    lastMsg={lastMassageGenerator(props.user, chat.chatWith)}
+                <Contact 
+                    image={profilePic}
+                    link={contact.id}
+                    usernick={contact.name}
+                    lastTime={contact.lasttime}
+                    lastMsg={contact.last}
                     key={key}>
                 </Contact>
             );
