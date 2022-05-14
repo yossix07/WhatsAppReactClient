@@ -41,17 +41,6 @@ function signUpForm(props) {
                       <div id="rePasswordInvalidFeedback" className="invalid-feedback"></div>
                     </div>
 
-                    <div className="form-floating form-white text-dark mb-4">
-                      <input ref={props.nick} id="SignUpNickname" type="text" placeholder="Enter Nickname" className="form-control" />
-                      <label htmlFor="SignUpNickname" className="form-label">Nickname</label>
-                      <div className="valid-feedback">
-                        Looks good!
-                      </div>
-                      <div id="nicknameInvalidFeedback" className="invalid-feedback">
-                        Please choose a password.
-                      </div>
-                    </div>
-
                     <div className="mb-3">
                       {!props.file && (
                         <div>
