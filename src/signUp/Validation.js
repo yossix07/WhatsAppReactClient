@@ -32,13 +32,6 @@ export const validateRepeatedPassword = (pass, rePass) => {
     return true;
 }
 
-export const validateNickname = (nick) => {
-    if (!(validateLength(nick, 2, "nicknameInvalidFeedback", "Nickname must contain at least two characters!", "SignUpNickname"))) {
-        return false;
-    }
-    return true;
-}
-
 export const validateUniqueUsername = (str, errorId, errorHtml, parentId) => {
     if (doesUserExist(str)) {
         document.getElementById(errorId).innerHTML = errorHtml;
