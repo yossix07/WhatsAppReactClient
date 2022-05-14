@@ -2,8 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SignUp.css";
 import SignUpForm from "./SignUpForm";
 import SignUpSuccess from "./SignUpSuccess";
-import { validateUsername, validatePassword, validateRepeatedPassword, validateNickname, validatePic } from "./Validation";
-import { addNewUser } from "../Users/UsersDB";
+import { validateUsername, validatePassword, validateRepeatedPassword, validatePic } from "./Validation";
+import { addNewUserAsync } from "../Users/DBQuerys";
 import { addUserWithEmptyChats } from "../Users/UsersChatDB";
 import $ from "jquery";
 import InvalidFileModal from "../InvalidFileModal";
@@ -47,25 +47,22 @@ function SignUp(props) {
   const name = useRef("");
   const pass = useRef("");
   const rePass = useRef("");
-  const nick = useRef("");
   var pic = null;
 
 
   $(document).ready(function () {
-    $("#signUpForm").unbind("submit").on("submit", function (event) {
+    $("#signUpForm").unbind("submit").on("submit", async function (event) {
       event.preventDefault();
       if (name.current.value && validateUsername(name.current.value) && pass.current.value && rePass.current.value
-        && validatePassword(pass.current.value, rePass.current.value) && validateRepeatedPassword(pass.current.value, rePass.current.value)
-        && validateNickname(nick.current.value)) {
-        if (!pic) {
-          pic = defalutProfilePic;
-          addNewUser(name.current.value, pass.current.value, nick.current.value, pic);
-        } else {
-          addNewUser(name.current.value, pass.current.value, nick.current.value, URL.createObjectURL(pic));
-        }
-        addUserWithEmptyChats(name.current.value);
-        props.setUserName(name.current.value);
-        showSignUpSuccesModal();
+        && validatePassword(pass.current.value, rePass.current.value) && validateRepeatedPassword(pass.current.value, rePass.current.value)) {
+          var token  = await addNewUserAsync(name.current.value, pass.current.value);
+          if(token != -1) {
+            showSignUpSuccesModal();
+            props.setToken(token);
+          } else {
+            // TODO - failed to register
+          }
+        
       }
       return false;
     });
@@ -73,8 +70,7 @@ function SignUp(props) {
 
   const checkButton = () => {
     if (name.current.value && validateUsername(name.current.value) && pass.current.value && rePass.current.value
-      && validatePassword(pass.current.value, rePass.current.value) && validateRepeatedPassword(pass.current.value, rePass.current.value)
-      && validateNickname(nick.current.value)) {
+      && validatePassword(pass.current.value, rePass.current.value) && validateRepeatedPassword(pass.current.value, rePass.current.value)) {
       document.getElementById("signUpButton").removeAttribute("disabled", "");
     }
     else {
@@ -86,14 +82,13 @@ function SignUp(props) {
     document.getElementById("SignUpUsername").addEventListener("keyup", function (event) { validateUsername(name.current.value); checkButton(); })
     document.getElementById("SignUpPassword").addEventListener("keyup", function (event) { validatePassword(pass.current.value, rePass.current.value); checkButton(); })
     document.getElementById("SignUpRePassword").addEventListener("keyup", function (event) { validateRepeatedPassword(pass.current.value, rePass.current.value); checkButton(); })
-    document.getElementById("SignUpNickname").addEventListener("keyup", function (event) { validateNickname(nick.current.value); checkButton(); })
   }, [])
 
   return (
     <div>
       <InvalidFileModal isOpen={isInvalidFileModalOpen} hideModal={hideInvalidPicModal} text="Picture format must be one of the following: jpg/jpeg/png/svg"></InvalidFileModal>
-      <SignUpSuccess isOpen={isSignUpSuccesModalOpen} hideModal={hideSignUpSuccesModal} nick={nick.current.value}></SignUpSuccess>
-      <SignUpForm name={name} pass={pass} rePass={rePass} nick={nick}
+      <SignUpSuccess isOpen={isSignUpSuccesModalOpen} hideModal={hideSignUpSuccesModal} name={name.current.value}></SignUpSuccess>
+      <SignUpForm name={name} pass={pass} rePass={rePass} 
         file={file} fileUpload={fileUpload} removePicture={removePicture}></SignUpForm>
     </div>
   );
