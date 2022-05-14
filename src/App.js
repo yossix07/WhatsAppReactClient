@@ -6,19 +6,20 @@ import ChatPage from "./chatPage/ChatPage";
 import "./App.css"
 
 function App() {
-  const [username, setUsername] = useState("");
 
-  const chagneUsername = (user) => {
-    setUsername(user);
+  const [token, setToken] = useState("");
+
+  const chagneToken = (t) => {
+    setToken(t);
   }
 
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LogIn setUserName={setUsername} />}>  </Route>
-          <Route path="/signup" element={<SignUp setUserName={chagneUsername} />}>  </Route>
-          <Route path="/chat" element={<ChatPage user={username} setUsername={setUsername} />}>  </Route>
+          <Route path="/" element={<LogIn setToken={chagneToken}/>}>  </Route>
+          <Route path="/signup" element={<SignUp setToken={chagneToken}/>}></Route>
+          <Route path="/chat" element={<ChatPage token={token} setToken={chagneToken}/>}></Route>
         </Routes>
       </BrowserRouter>
     </div>
