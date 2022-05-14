@@ -29,7 +29,7 @@ function LogIn(props) {
         props.setToken(token);
         navigate("/chat", { replace: true });
       } else {
-        // TODO - failed to register
+        showModal();
       }
 
     });
