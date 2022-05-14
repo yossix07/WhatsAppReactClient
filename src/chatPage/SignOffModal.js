@@ -6,7 +6,7 @@ function SignOffModal(props) {
     let navigate = useNavigate();
 
     const signOff = () => {
-        props.setUsername("");
+        props.setToken("");
         navigate("/", { replace: true });
     }
 
