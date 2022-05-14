@@ -1,10 +1,8 @@
 import { Accordion, Card, useAccordionButton } from "react-bootstrap";
 import { useRef, useState, useEffect } from "react";
-import { getUserPicture } from "../Users/UsersDB";
 import { validateAddContact } from "../Users/UsersChatDB";
 import ProfilePicModal from "./ProfilePicModal";
-import $ from "jquery";
-import { addContact } from "../Users/UsersChatDB";
+import profilePic from "../Users/ProfilePictures/DefalutProfilePic.jpg";
 import SignOffModal from "./SignOffModal";
 import "./ContactsBar.css";
 import AddContactModal from "./AddContactModal";
@@ -83,7 +81,7 @@ function ContactsBar(props) {
 
     return (
         <>
-            <SignOffModal isOpen={isSignOffModelOpen} hideModal={hideSignOffModal} setUsername={props.setUsername}></SignOffModal>
+            <SignOffModal isOpen={isSignOffModelOpen} hideModal={hideSignOffModal} setToken={props.setToken}></SignOffModal>
             <ProfilePicModal isOpen={isProfilePicModelOpen} hideModal={hideProfilePicModal} myUser={props.myUser}></ProfilePicModal>
             <AddContactModal isOpen={isAddContactModelOpen} hideModal={hideAddContactModal} myUser={props.myUser}></AddContactModal>
             <div className="icons_item">
@@ -91,7 +89,7 @@ function ContactsBar(props) {
                     <Card>
                         <Card.Header>
                             <div className="d-flex justify-content-between">
-                                <img id="profile_pic" src={getUserPicture(props.myUser)} onClick={showProfilePicfModal} className="rounded-circle user_img_msg" alt="profile" />
+                                <img id="profile_pic" src={profilePic} onClick={showProfilePicfModal} className="rounded-circle user_img_msg" alt="profile" />
                                 <button
                                     type="button"
                                     className="btn btn-outline-secondary"
