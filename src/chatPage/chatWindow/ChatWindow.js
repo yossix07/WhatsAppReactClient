@@ -3,8 +3,11 @@ import ReceiverMessage from "./ReceiverMessage";
 import SenderMessage from "./SenderMessage";
 import SenderMsgBar from "./SendMsgBar";
 import ContactHeader from "./ContactHeader";
-import { getChatMessages } from "../../Users/UsersChatDB";
+import { getContactsMessagesAsync } from "../../Users/DBQuerys";
 import $ from "jquery";
+import { useEffect } from "react";
+
+
 
 function ChatWindow(props) {
 
@@ -18,17 +21,29 @@ function ChatWindow(props) {
         });
     });
 
-    const messages = getChatMessages(props.myUser, props.user);
+
+    var messages;
+
+    useEffect(()=> { 
+        async function fetchMessages() {
+            messages = await getContactsMessagesAsync(props.token, props.contactName);
+        }
+        fetchMessages();
+
+        console.log("messages in use effect: ")
+        console.log(messages);
+        
+    }, []);
 
     //get all messages of user (sender and reciever)
-    var msgList = messages?.map((m, key) => {
+    var msgList = Array.from(messages).map((m, key) => {
 
         if (m.sent) {
             return (
                 <SenderMessage
-                    msgText={m.msg}
-                    msgTime={m.time}
-                    type={m.type}
+                    msgText={m.content}
+                    msgTime={m.created}
+                    type="text"
                     key={key}>
                 </SenderMessage>
             );
@@ -36,10 +51,10 @@ function ChatWindow(props) {
 
         return (
             <ReceiverMessage
-                img={props.image}
-                msgText={m.msg}
-                msgTime={m.time}
-                type={m.type}
+                img={null}
+                msgText={m.content}
+                msgTime={m.created}
+                type="text"
                 key={key}>
             </ReceiverMessage>
         );
