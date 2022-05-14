@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
-import { doesUserExist, getUserPassword } from "../Users/UsersDB";
 import LogInForm from "./LogInForm";
 import $ from "jquery"
 import LogInFailed from "./LogInFailure";
 import { useNavigate } from "react-router-dom";
+import { LogInAsync } from "../Users/DBQuerys";
 
 
 function LogIn(props) {
@@ -22,15 +22,16 @@ function LogIn(props) {
   let navigate = useNavigate();
 
   $(document).ready(function () {
-    $("#logInForm").on("submit", function (event) {
+    $("#logInForm").on("submit", async function (event) {
       event.preventDefault();
-
-      if (doesUserExist(name.current.value) && getUserPassword(name.current.value) === pass.current.value) {
-        props.setUserName(name.current.value);
+      var token = await LogInAsync(name.current.value, pass.current.value);
+      if(token != -1) {
+        props.setToken(token);
         navigate("/chat", { replace: true });
       } else {
-        showModal();
+        // TODO - failed to register
       }
+
     });
   });
 
