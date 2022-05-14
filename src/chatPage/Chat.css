@@ -1,0 +1,222 @@
+.contact_card {
+    border-radius: 15px !important;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.contacts_list {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    height: 75%;
+    overflow: auto;
+}
+
+.list_group_items {
+    margin-top: 0 !important;
+    background-color: rgba(0, 0, 0, 0.30) !important;
+    color: #f0f0f283;
+    border: 0;
+}
+
+.icons_item {
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    border: 0;
+}
+
+.card {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+    border: 0;
+}
+
+.contacts_body {
+    padding: 0.75rem 0 !important;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.chat {
+    background-image: url("../chat-wallpaper.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.msg_card_body {
+    overflow-y: auto;
+    height: 70%;
+}
+
+.card-header {
+    position: relative;
+    height: 15%;
+    background-color: rgba(0, 0, 0, 0.30) !important;
+    border-radius: 15px 15px 0 0 !important;
+    border-bottom: 0 !important;
+}
+
+.card-footer {
+    height: 15%;
+    border-radius: 0 0 15px 15px !important;
+    border-top: 0 !important;
+}
+
+.container {
+    align-content: center;
+}
+
+.type_msg {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    border: 0 !important;
+    color: white !important;
+    height: 60px !important;
+    overflow-y: auto;
+}
+
+.type_msg:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+}
+
+.attach_video_btn {
+    border-radius: 0 0 0 0 !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    height: 60px !important;
+    border: 0 !important;
+    cursor: pointer;
+}
+
+.attach_img_btn {
+    border-radius: 0 0 0 0 !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    height: 60px !important;
+    border: 0 !important;
+    cursor: pointer;
+}
+
+.record_btn {
+    border-radius: 15px 0 0 15px !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    height: 60px !important;
+    border: 0 !important;
+    cursor: pointer;
+}
+
+.send_btn {
+    border-radius: 0 15px 15px 0 !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    height: 60px !important;
+    border: 0 !important;
+    cursor: pointer;
+}
+
+.btn {
+    color: white !important;
+}
+
+.btn:hover {
+    color: darkcyan !important;
+}
+
+#add_contact_btn {
+    border-radius: 0 15px 15px 0 !important;
+    background-color: rgba(0, 0, 0, 0.3) !important;
+    height: 60px !important;
+    border: 0 !important;
+    color: white !important;
+    cursor: pointer;
+}
+
+.user_img {
+    height: 80px;
+    width: 80px;
+    border: 1.5px solid #f5f6fa;
+
+}
+
+.user_img_msg {
+    height: 45px;
+    width: 45px;
+    border: 1.5px solid #f5f6fa;
+
+}
+
+.img_cont {
+    position: relative;
+    height: 80px;
+    width: 80px;
+}
+
+.img_cont_msg {
+    height: 45px;
+    width: 45px;
+}
+
+.user_info {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+}
+
+.user_info span {
+    font-size: 20px;
+    color: white;
+}
+
+.user_info p {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.last_msg {
+    overflow-wrap: break-word;
+}
+
+.msg_cotainer {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 10px;
+    border-radius: 25px;
+    background-color: #c2ccc4;
+    padding: 10px;
+    position: relative;
+    max-width: 70%;
+    overflow-wrap: break-word;
+}
+
+.msg_cotainer_send {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-right: 10px;
+    border-radius: 25px;
+    background-color: #78e08f;
+    padding: 10px;
+    position: relative;
+    max-width: 70%;
+    overflow-wrap: break-word;
+}
+
+.msg_time {
+    position: absolute;
+    left: 0;
+    bottom: -15px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 10px;
+}
+
+.msg_time_send {
+    position: absolute;
+    right: 0;
+    bottom: -15px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 10px;
+}
+
+.msg_cotainer_media {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.msg_record {
+    width: 200px !important;
+    height: 40px !important;
+}
