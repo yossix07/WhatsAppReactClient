@@ -120,46 +120,49 @@ export async function addContactAsync(from, to, nickname, server, token) {
   return -1;
 }
 
+async function addMessageToContactServer(from, to, server, content) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({"from": from,  "to": to,  "content": content })
+  };
 
+  const response = await fetch("http://" + server + "/api/transfer/", requestOptions);
+  console.log("response is: ");
+  console.log( response.ok);
+  return response.ok;
+}
 
+async function addMessageToMyServer(to, server, content, token) {
+  const requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      "Authorization": `Bearer ${token}`
+    },
+    body: JSON.stringify({"content": content })
+  };
 
-// export async function addContactAsync(username, contactUsername, contactNickname, contactServer) {
-//   const requestOptions = {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ "myUsername": username, "id": contactUsername, "name": contactNickname, "server": contactServer })
-//   };
-//   const response = await fetch(urlPrefix + "/contacts", requestOptions).then(res => res.json().then(data => (
-//     {
-//       data: data,
-//       status: res.status
-//     })
-//   ));
+  const response = await fetch("http://" + server + "/api/Contacts/" + to + "/Messages", requestOptions);
+  console.log("response is: ");
+  console.log( response.ok);
+  return response.ok;
+}
 
-//   const s = response.status;
-//   console.log("status is: " + s);
-//   return s;
-// }
+export async function sendMessage(from, to, server, content, token) {
+  var result = await addMessageToContactServer(from, to , server, content);
+  if (result) {
+    console.log("got in");
+    result = await addMessageToMyServer(to, server, content, token);
+    console.log("result is:")
+    console.log(result);
+    if(result) {
+      return 1;
+    }
+    return 0;
+  }
+  return -1;
+}
 
-// sends a new chat invitation
-// export async function sendChatInvitationAsync(InvitationSender, InvitationReciver, ReciverServer) {
-//   console.log(InvitationSender);
-//   console.log(InvitationReciver);
-//   console.log(ReciverServer);
-
-//   const requestOptions = {
-//     method: 'POST',
-//     headers: { 'Content-Type': 'application/json' },
-//     body: JSON.stringify({ "from": InvitationSender, "to": InvitationReciver, "server": "localhost" + myPort })
-//   };
-//   const response = await fetch("http://" + ReciverServer + "/api/invitations", requestOptions).then(res => res.json().then(data => (
-//     {
-//       data: data,
-//       status: res.status
-//     })
-//   ));
-
-//   const s = response.status;
-//   console.log("status is: " + s);
-//   return s;
-// }

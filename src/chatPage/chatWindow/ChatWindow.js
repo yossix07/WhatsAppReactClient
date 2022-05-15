@@ -71,8 +71,10 @@ function ChatWindow(props) {
                         {msgList}
                     </div>
                     <SenderMsgBar
-                        username={props.user}
+                        contactUsername={props.contactName}
+                        contactServer={props.contactServer}
                         myUser={props.myUser}
+                        token={props.token}
                         refreshChat={props.refreshChat}>
                     </SenderMsgBar>
                 </div>

@@ -53,6 +53,7 @@ function Chat(props) {
                     image={profilePic}
                     nickname={contact.name}
                     contactName={contact.id}
+                    contactServer={contact.server}
                     myUser={props.user}
                     refreshChat={refreshChat}
                     key={key}>

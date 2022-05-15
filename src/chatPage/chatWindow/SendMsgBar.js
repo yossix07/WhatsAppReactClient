@@ -5,12 +5,13 @@ import $ from "jquery";
 import InvalidFileModal from "../../InvalidFileModal";
 import Recorder from "./Recorder";
 import "./SendMsgBar.css"
+import { sendMessage } from "../../Users/DBQuerys";
 
 function SendMsgBar(props) {
 
-    const btnId = props.myUser.concat("-").concat(props.username);
+    const btnId = props.myUser.concat("-").concat(props.contactUsername);
 
-    const msgContainerId = props.myUser.concat("-").concat(props.username).concat("-msg-container");
+    const msgContainerId = props.myUser.concat("-").concat(props.contactUsername).concat("-msg-container");
 
     const textMsg = useRef("");
 
@@ -28,17 +29,17 @@ function SendMsgBar(props) {
         });
 
         // click enter handler (send message)
-        $("#".concat(btnId).concat("-msg-input")).bind("keypress", function (e) {
+        $("#".concat(btnId).concat("-msg-input")).unbind().bind("keypress", function (e) {
             if (e.keyCode === 13) {
+                console.log("sending msg");
                 document.getElementById(btnId.concat("-msg")).click();
             }
         })
 
         // send message handler
-        $("#".concat(btnId).concat("-msg")).unbind("click").on("click", function () {
-            const date = new Date();
-            let time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
-            addTextMessage(props.myUser, props.username, textMsg.current.value, time);
+        $("#".concat(btnId).concat("-msg")).unbind("click").on("click",async function () {
+            
+            await sendMessage(props.myUser, props.contactUsername, props.contactServer ,textMsg.current.value, props.token);
             props.refreshChat();
             textMsg.current.value = "";
             $("#".concat(btnId).concat("-msg")).prop('disabled', $("#".concat(btnId).concat("-msg-input")).val() === "");
@@ -84,7 +85,7 @@ function SendMsgBar(props) {
         if (validatePic(e.target.files[0])) {
             const date = new Date();
             let time = date.getHours() + ":" + date.getMinutes();
-            addPictureMessage(props.myUser, props.username, URL.createObjectURL(e.target.files[0]), time);
+            addPictureMessage(props.myUser, props.contactUsername, URL.createObjectURL(e.target.files[0]), time);
             props.refreshChat();
         }
         else {
@@ -115,7 +116,7 @@ function SendMsgBar(props) {
         if (validateVid(e.target.files[0])) {
             const date = new Date();
             let time = date.getHours() + ":" + date.getMinutes();
-            addVideoMessage(props.myUser, props.username, URL.createObjectURL(e.target.files[0]), time);
+            addVideoMessage(props.myUser, props.contactUsername, URL.createObjectURL(e.target.files[0]), time);
             props.refreshChat();
         } else {
             setModalText("Video format must be one of the following: mp4/mkv/avi/wmv/mov/flv");
@@ -146,7 +147,7 @@ function SendMsgBar(props) {
         <Popover className="popover-basic popover-member">
             <Popover.Header as="h1" className="popover-header popover-member">Record</Popover.Header>
             <Popover.Body className="popover-member">
-                <Recorder className="popover-member" myUser={props.myUser} username={props.username} refreshChat={props.refreshChat} btnId={btnId}></Recorder>
+                <Recorder className="popover-member" myUser={props.myUser} username={props.contactUsername} refreshChat={props.refreshChat} btnId={btnId}></Recorder>
             </Popover.Body>
         </Popover>
     );
