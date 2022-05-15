@@ -57,8 +57,10 @@ function SignUp(props) {
         && validatePassword(pass.current.value, rePass.current.value) && validateRepeatedPassword(pass.current.value, rePass.current.value)) {
           var token  = await addNewUserAsync(name.current.value, pass.current.value);
           if(token != -1) {
-            showSignUpSuccesModal();
             props.setToken(token);
+            props.setUsername(name.current.value);
+            showSignUpSuccesModal();
+            
           } else {
             // TODO - failed to register
           }

@@ -81,9 +81,9 @@ function ContactsBar(props) {
 
     return (
         <>
-            <SignOffModal isOpen={isSignOffModelOpen} hideModal={hideSignOffModal} setToken={props.setToken}></SignOffModal>
+            <SignOffModal isOpen={isSignOffModelOpen} hideModal={hideSignOffModal} setToken={props.setToken} setUsername={props.setUsername}></SignOffModal>
             <ProfilePicModal isOpen={isProfilePicModelOpen} hideModal={hideProfilePicModal} myUser={props.myUser}></ProfilePicModal>
-            <AddContactModal isOpen={isAddContactModelOpen} hideModal={hideAddContactModal} myUser={props.myUser}></AddContactModal>
+            <AddContactModal isOpen={isAddContactModelOpen} hideModal={hideAddContactModal} myUser={props.myUser} token={props.token}></AddContactModal>
             <div className="icons_item">
                 <Accordion>
                     <Card>

@@ -5,9 +5,6 @@ import profilePic from "../../Users/ProfilePictures/DefalutProfilePic.jpg"
 
 function ContactListResult(props) {
 
-    console.log("in ContactListResult:");
-    console.log(props.contacts);
-
     var contactList;
 
     // get all contacts of user

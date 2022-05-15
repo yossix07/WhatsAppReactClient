@@ -7,9 +7,15 @@ import "./App.css"
 
 function App() {
 
+  const [username, setUsername] = useState("");
+
+  const changeUsername = (user) => {
+    setUsername(user);
+  }
+
   const [token, setToken] = useState("");
 
-  const chagneToken = (t) => {
+  const changeToken = (t) => {
     setToken(t);
   }
 
@@ -17,9 +23,9 @@ function App() {
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<LogIn setToken={chagneToken}/>}>  </Route>
-          <Route path="/signup" element={<SignUp setToken={chagneToken}/>}></Route>
-          <Route path="/chat" element={<ChatPage token={token} setToken={chagneToken}/>}></Route>
+          <Route path="/" element={<LogIn setToken={changeToken} setUsername={changeUsername}/>}>  </Route>
+          <Route path="/signup" element={<SignUp setToken={changeToken} setUsername={changeUsername}/> }></Route>
+          <Route path="/chat" element={<ChatPage token={token} setToken={changeToken} user={username} setUsername={changeUsername} />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

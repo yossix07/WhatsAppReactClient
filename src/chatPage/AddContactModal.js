@@ -5,7 +5,7 @@ import Form from 'react-bootstrap/Form'
 import { Container } from "react-bootstrap";
 import "./AddContactModal.css";
 import $ from "jquery";
-import { sendChatInvitationAsync, addContactAsync } from "../Users/DBQuerys";
+import { addContactAsync } from "../Users/DBQuerys";
 import AddContactErrorModal from "./chatWindow/AddContactErrorModal";
 
 function AddContactModal(props) {
@@ -20,13 +20,15 @@ function AddContactModal(props) {
             $("#addContactForm").submit();
         })
 
-        $("#addContactForm").unbind("submit").on("submit", function (event) {
+        $("#addContactForm").unbind("submit").on("submit", async function (event) {
             event.preventDefault();
-            if (sendChatInvitationAsync(props.myUser, contactUsername.current.value, contactServer.current.value) == 201) {
-                console.log("good");
-                addContactAsync(props.myUser, contactUsername.current.value, contactNickname.current.value, contactServer.current.value);
+            console.log("good");
+            const result = await addContactAsync(props.myUser, contactUsername.current.value
+                , contactNickname.current.value, contactServer.current.value, props.token);
+
+            if (result == 1) {
+                props.hideModal();
             } else {
-                console.log("bad");
                 showError();
             }
             return false;
@@ -37,18 +39,18 @@ function AddContactModal(props) {
     const [isErrorModelOpen, setIsErrorModelOpen] = useState(false);
 
     const showError = () => {
-        document.getElementById("addContactModal").setAttribute("hidden","");
+        document.getElementById("addContactModal").setAttribute("hidden", "");
         setIsErrorModelOpen(true);
     };
     const hideError = () => {
         setIsErrorModelOpen(false);
-        document.getElementById("addContactModal").removeAttribute("hidden","");
+        document.getElementById("addContactModal").removeAttribute("hidden", "");
     };
 
 
     return (
         <>
-        <AddContactErrorModal isOpen={isErrorModelOpen} hideErrorModal={hideError} hideModal={props.hideModal}> </AddContactErrorModal>
+            <AddContactErrorModal isOpen={isErrorModelOpen} hideErrorModal={hideError} hideModal={props.hideModal}> </AddContactErrorModal>
             <Modal id="addContactModal" show={props.isOpen} onHide={props.hideModal} >
                 <Modal.Header className="bg-dark text-white">
                     <Modal.Title>Add New Contact</Modal.Title>

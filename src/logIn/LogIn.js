@@ -26,6 +26,7 @@ function LogIn(props) {
       event.preventDefault();
       var token = await LogInAsync(name.current.value, pass.current.value);
       if(token != -1) {
+        props.setUsername(name.current.value);
         props.setToken(token);
         navigate("/chat", { replace: true });
       } else {

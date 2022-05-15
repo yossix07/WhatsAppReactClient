@@ -5,8 +5,8 @@ import SenderMsgBar from "./SendMsgBar";
 import ContactHeader from "./ContactHeader";
 import { getContactsMessagesAsync } from "../../Users/DBQuerys";
 import $ from "jquery";
-import { useEffect } from "react";
-
+import { useEffect, useState} from "react";
+import profilePic from "../../Users/ProfilePictures/DefalutProfilePic.jpg"
 
 
 function ChatWindow(props) {
@@ -22,43 +22,45 @@ function ChatWindow(props) {
     });
 
 
-    var messages;
+    const [messages, setMessages] = useState(null);
 
     useEffect(()=> { 
         async function fetchMessages() {
-            messages = await getContactsMessagesAsync(props.token, props.contactName);
+            setMessages(await getContactsMessagesAsync(props.token, props.contactName));
         }
         fetchMessages();
 
-        console.log("messages in use effect: ")
+        console.log("Messages in use effect: ")
         console.log(messages);
         
     }, []);
 
     //get all messages of user (sender and reciever)
-    var msgList = Array.from(messages).map((m, key) => {
+    if(messages) {
+        var msgList = Array.from(messages).map((m, key) => {
 
-        if (m.sent) {
+            if (m.sent) {
+                return (
+                    <SenderMessage
+                        msgText={m.content}
+                        msgTime={m.created}
+                        type="text"
+                        key={key}>
+                    </SenderMessage>
+                );
+            }
+    
             return (
-                <SenderMessage
+                <ReceiverMessage
+                    img={profilePic}
                     msgText={m.content}
                     msgTime={m.created}
                     type="text"
                     key={key}>
-                </SenderMessage>
+                </ReceiverMessage>
             );
-        }
-
-        return (
-            <ReceiverMessage
-                img={null}
-                msgText={m.content}
-                msgTime={m.created}
-                type="text"
-                key={key}>
-            </ReceiverMessage>
-        );
-    })
+        })
+    }
 
     return (
         <Tab.Pane eventKey={"#".concat(props.link)}>
