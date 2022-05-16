@@ -26,15 +26,21 @@ function Chat(props) {
         var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5146/myHub")
         .configureLogging(signalR.LogLevel.Information).build();
 
-        // connection.on("ContactChangeRecieved", (value) => {
-        //     console.log("in contacts change");
-        //     setcontactsList(value);
-        // });
+        connection.on("ContactChangeRecieved", (contact) => {
+            console.log("got contact:")
+            console.log(contact);
 
-        // connection.on("MessageChangeRecieved", (value) => {
-        //     console.log("in contacts change");
-        //     setcontactsList(value);
-        // });
+            let cont = contactsList;
+
+            console.log("local contacts list is:")
+            console.log(cont);
+
+            cont?.push(contact);
+
+            console.log("after addition contacts list is:")
+            console.log(cont);
+            setcontactsList(cont);
+        });
 
         await connection.start({ withCredentials: false }).then(() => {
             console.log("SignalR Coneected!");
@@ -43,6 +49,13 @@ function Chat(props) {
             console.log(e);
         });
     });
+
+    function editContact(contact) {
+        let cont = contactsList;        
+        let oldContact = cont?.findIndex(c => c.id == contact.id);
+        cont[oldContact] = contact;
+        setcontactsList(cont);
+    }
 
     useEffect(() => {
         async function fetchContacts() {
@@ -79,6 +92,7 @@ function Chat(props) {
                     contactServer={contact.server}
                     myUser={props.user}
                     refreshChat={refreshChat}
+                    editContact={editContact}
                     key={key}>
                 </ChatWindow>
             );
