@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes, } from "react-router-dom";
 import LogIn from './logIn/LogIn';
 import SignUp from './signUp/SignUpMain';
 import ChatPage from "./chatPage/ChatPage";
+import Ratings from "./Ratings";
 import "./App.css"
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Routes>
           <Route path="/" element={<LogIn setToken={changeToken} setUsername={changeUsername}/>}>  </Route>
           <Route path="/signup" element={<SignUp setToken={changeToken} setUsername={changeUsername}/> }></Route>
+          <Route path="/ratings" element={<Ratings/>}></Route>
           <Route path="/chat" element={<ChatPage token={token} setToken={changeToken} user={username} setUsername={changeUsername} />}></Route>
         </Routes>
       </BrowserRouter>

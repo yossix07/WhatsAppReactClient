@@ -15,7 +15,6 @@ function ChatWindow(props) {
     const msgTabPaneId = props.myUser.concat("-").concat(props.user).concat("-msg-tab-pane");
 
     $(document).ready(function (event) {
-
         $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
             $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
         });

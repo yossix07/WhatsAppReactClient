@@ -36,6 +36,10 @@ function SendMsgBar(props) {
             }
         })
 
+        // $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
+        //     $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
+        // });
+
         // send message handler
         $("#".concat(btnId).concat("-msg")).unbind("click").on("click",async function () {
             

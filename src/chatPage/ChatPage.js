@@ -6,7 +6,8 @@ import ChatWindow from "./chatWindow/ChatWindow";
 import ContactListResult from "./chatWindow/ContactListResults";
 import { useEffect, useState } from "react";
 import profilePic from "../Users/ProfilePictures/DefalutProfilePic.jpg";
-
+import * as signalR from "@microsoft/signalr";
+import $ from "jquery"
 
 function Chat(props) {
 
@@ -20,6 +21,28 @@ function Chat(props) {
             setRefresh(0);
         }
     }
+
+    $(document).ready(async () => {
+        var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5146/myHub")
+        .configureLogging(signalR.LogLevel.Information).build();
+
+        // connection.on("ContactChangeRecieved", (value) => {
+        //     console.log("in contacts change");
+        //     setcontactsList(value);
+        // });
+
+        // connection.on("MessageChangeRecieved", (value) => {
+        //     console.log("in contacts change");
+        //     setcontactsList(value);
+        // });
+
+        await connection.start({ withCredentials: false }).then(() => {
+            console.log("SignalR Coneected!");
+            console.log(connection);
+        }).catch((e) => {
+            console.log(e);
+        });
+    });
 
     useEffect(() => {
         async function fetchContacts() {
@@ -42,8 +65,8 @@ function Chat(props) {
     }
 
     var chatWindows;
-
-    // create each contact it's chat window
+    const getChatWindows = () => {
+        // create each contact it's chat window
     if (contactsList) {
         chatWindows = contactsList.map((contact, key) => {
             return (
@@ -61,6 +84,9 @@ function Chat(props) {
             );
         })
     }
+    }
+
+    getChatWindows();
 
     return (
         <div>

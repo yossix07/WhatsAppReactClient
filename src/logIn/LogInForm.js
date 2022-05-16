@@ -26,7 +26,7 @@ function LogInForm(props) {
                   </form>
 
                   <p>Don't have an account? <Link to="/signup" className="text-white-50 fw-bold">Sign Up</Link></p>
-
+                  <p>Wanna see ratings? <Link to="/ratings" className="text-white-50 fw-bold">Click Here!</Link></p>
                 </div>
               </div>
             </div>
