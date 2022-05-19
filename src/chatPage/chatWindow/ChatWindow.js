@@ -34,6 +34,8 @@ function ChatWindow(props) {
             console.log(e);
         });
 
+        await connection.invoke("Connect", props.myUser);
+
 
         $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
             $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
