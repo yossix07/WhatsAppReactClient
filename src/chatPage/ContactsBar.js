@@ -73,17 +73,17 @@ function ContactsBar(props) {
         document.getElementById("add-contact-input").addEventListener("keyup", function (event) { validateAddContactKeyUp(props.myUser, addContactRef.current.value); })
     }, [props.myUser])
 
-    const searchBox = useRef(null);
-
     const searchContact = function () {
-        props.doSearch(searchBox.current.value);
+        props.doSearch(props.searchBox.current.value);
+        // props.refreshContactList();
     }
 
     return (
         <>
             <SignOffModal isOpen={isSignOffModelOpen} hideModal={hideSignOffModal} setToken={props.setToken} setUsername={props.setUsername}></SignOffModal>
             <ProfilePicModal isOpen={isProfilePicModelOpen} hideModal={hideProfilePicModal} myUser={props.myUser}></ProfilePicModal>
-            <AddContactModal isOpen={isAddContactModelOpen} hideModal={hideAddContactModal} myUser={props.myUser} token={props.token}></AddContactModal>
+            <AddContactModal isOpen={isAddContactModelOpen} hideModal={hideAddContactModal} myUser={props.myUser}
+            token={props.token} connection={props.connection} getRefresh={props.getRefresh} addContact={props.addContact}></AddContactModal>
             <div className="icons_item">
                 <Accordion>
                     <Card>
@@ -104,7 +104,7 @@ function ContactsBar(props) {
                         </Card.Header>
                         <Accordion.Collapse eventKey="0">
                             <Card.Body>
-                                <input type="search" ref={searchBox} className="form-control type_msg" id="search-input" placeholder="Search contacts..." onKeyUp={searchContact} onChange={searchContact} aria-label="Search contacts..." />
+                                <input type="search" ref={props.searchBox} className="form-control type_msg" id="search-input" placeholder="Search contacts..." onKeyUp={searchContact} onChange={searchContact} aria-label="Search contacts..." />
                             </Card.Body>
                         </Accordion.Collapse>
                         <Accordion.Collapse eventKey="1">

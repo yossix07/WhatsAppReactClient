@@ -15,7 +15,7 @@ function ContactListResult(props) {
                     image={profilePic}
                     link={contact.id}
                     usernick={contact.name}
-                    lastTime={contact.lasttime}
+                    lastTime={(contact.lastdate)?.substr(11, 5)}
                     lastMsg={contact.last}
                     key={key}>
                 </Contact>

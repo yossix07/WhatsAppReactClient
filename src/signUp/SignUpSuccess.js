@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 function SignUpSuccess(props) {
     let navigate = useNavigate();
 
-    const goToLogIn = () => {
+    const goToChats = () => {
         navigate("/chat", { replace: true });
     }
 
@@ -15,7 +15,7 @@ function SignUpSuccess(props) {
             </Modal.Header>
             <Modal.Body className="bg-dark text-white">You are ready to chat!</Modal.Body>
             <Modal.Footer className="bg-dark text-white">
-                <button className="btn btn-outline-light" onClick={goToLogIn}>Start Chatting</button>
+                <button className="btn btn-outline-light" onClick={goToChats}>Start Chatting</button>
             </Modal.Footer>
         </Modal>
     );

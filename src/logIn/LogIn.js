@@ -22,7 +22,8 @@ function LogIn(props) {
   let navigate = useNavigate();
 
   $(document).ready(function () {
-    $("#logInForm").on("submit", async function (event) {
+    $("#logInForm").unbind().on("submit", async function (event) {
+      console.log("loggin in")
       event.preventDefault();
       var token = await LogInAsync(name.current.value, pass.current.value);
       if(token != -1) {

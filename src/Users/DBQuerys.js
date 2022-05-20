@@ -18,6 +18,8 @@ export async function addNewUserAsync(username, password) {
 }
 
 export async function LogInAsync(username, password) {
+  console.log("username in LogInAsync is")
+    console.log(username)
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -27,6 +29,8 @@ export async function LogInAsync(username, password) {
   const response = await fetch(urlPrefix + "/LogIn", requestOptions);
   if (response.ok) {
     const token = await response.text();
+    console.log("token in LogInAsync is")
+    console.log(token)
     return token;
   }
   return -1;
@@ -47,11 +51,17 @@ export async function getContactsAsync(token) {
   };
 
   const response = await fetch(urlPrefix + "/contacts", requestOptions);
-  const json = await response.json()
 
-  console.log(json);
-
-  return json;
+  if(response.ok) {
+    const json = await response.json()
+    console.log(json);
+    return json;
+  } else if(response.status == 401){
+    return -1;
+  } else {
+    return 0;
+  }
+ 
 }
 
 // get the user's messages with contactId

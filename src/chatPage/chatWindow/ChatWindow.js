@@ -17,25 +17,23 @@ function ChatWindow(props) {
 
     $(document).unbind().ready(async function (event) {
 
-        var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5146/myHub")
-        .configureLogging(signalR.LogLevel.Information).build();
+        // var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5146/myHub").build();
 
-        connection.on("MessageChangeRecieved", (contact, msg) => {
-            let mesgs = messages;
-            mesgs?.push(msg);
-            setMessages(mesgs);
-            props.editContact(contact);
-        });
+        // await connection.start({ withCredentials: false }).then(() => {
+        //     console.log("SignalR Coneected!");
+        //     console.log(connection);
+        // }).catch((e) => {
+        //     console.log(e);
+        // });
 
-        await connection.start({ withCredentials: false }).then(() => {
-            console.log("SignalR Coneected!");
-            console.log(connection);
-        }).catch((e) => {
-            console.log(e);
-        });
+        // connection.on("MessageChangeRecieved", (contact, msg) => {
+        //     let mesgs = messages;
+        //     mesgs?.push(msg);
+        //     setMessages(mesgs);
+        //     props.editContact(contact);
+        // });
 
-        await connection.invoke("Connect", props.myUser);
-
+        // await connection.invoke("Connect", props.myUser);
 
         $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
             $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
@@ -64,7 +62,7 @@ function ChatWindow(props) {
                 return (
                     <SenderMessage
                         msgText={m.content}
-                        msgTime={m.created}
+                        msgTime={(m.created).substr(11, 5)}
                         type="text"
                         key={key}>
                     </SenderMessage>
@@ -75,7 +73,7 @@ function ChatWindow(props) {
                 <ReceiverMessage
                     img={profilePic}
                     msgText={m.content}
-                    msgTime={m.created}
+                    msgTime={(m.created).substr(11, 5)}
                     type="text"
                     key={key}>
                 </ReceiverMessage>

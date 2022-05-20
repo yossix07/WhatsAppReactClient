@@ -163,15 +163,15 @@ function SendMsgBar(props) {
                 <div className="input-group">
                     <div className="input-group-append">
                         <OverlayTrigger trigger="click" placement="top" overlay={popover}>
-                            <button id={btnId.concat("-popoverBtn")} type="button" className="btn btn-outline-secondary input-group-text record_btn popover-btn" onClick={microphoneClicked}><i className="bi bi-mic popover-btn"></i></button>
+                            <button disabled id={btnId.concat("-popoverBtn")} type="button" className="btn btn-outline-secondary input-group-text record_btn popover-btn" onClick={microphoneClicked}><i className="bi bi-mic popover-btn"></i></button>
                         </OverlayTrigger>
                     </div>
                     <div className="input-group-append">
-                        <button id={btnId.concat("-img-btn")} type="button" onClick={selectPic} className="btn btn-outline-secondary input-group-text attach_img_btn media"><i className="bi bi-image"></i></button>
+                        <button disabled id={btnId.concat("-img-btn")} type="button" onClick={selectPic} className="btn btn-outline-secondary input-group-text attach_img_btn media"><i className="bi bi-image"></i></button>
                         <input id={btnId.concat("-img-input")} onChange={sendPic} type="file" accept="image/*" className="media" hidden></input>
                     </div>
                     <div className="input-group-append">
-                        <button id={btnId.concat("-vid-btn")} type="button" onClick={selectVideo} className="btn btn-outline-secondary input-group-text attach_video_btn media"><i className="bi bi-camera-reels"></i></button>
+                        <button disabled id={btnId.concat("-vid-btn")} type="button" onClick={selectVideo} className="btn btn-outline-secondary input-group-text attach_video_btn media"><i className="bi bi-camera-reels"></i></button>
                         <input id={btnId.concat("-vid-input")} onChange={sendVideo} type="file" accept="video/*" className="media" hidden ></input>
                     </div>
                     <input className="type_msg form-control" ref={textMsg} placeholder="Type your message..." id={btnId.concat("-msg-input")} ></input>
