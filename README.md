@@ -24,6 +24,10 @@ All you need to do now is to wait for the website to open on you browser.
 * In case you want to check the website ratings, just click on the relevant link!
 * When successfully logged-in, you will be navigated to the chats screen.
 
+## Ratings Page
+
+You can find more information about this page on here: https://github.com/OsherElhadad/WhatsAppRating
+
 ## Sign-Up Page
 
 * This page allows you to create your account.
