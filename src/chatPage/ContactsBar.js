@@ -4,7 +4,6 @@ import { validateAddContact } from "../Users/UsersChatDB";
 import ProfilePicModal from "./ProfilePicModal";
 import profilePic from "../Users/ProfilePictures/DefalutProfilePic.jpg";
 import SignOffModal from "./SignOffModal";
-import "./ContactsBar.css";
 import AddContactModal from "./AddContactModal";
 
 // create search contact button
@@ -89,7 +88,7 @@ function ContactsBar(props) {
                     <Card>
                         <Card.Header>
                             <div className="d-flex justify-content-between">
-                                <img id="profile_pic" src={profilePic} onClick={showProfilePicfModal} className="rounded-circle user_img_msg" alt="profile" />
+                                <img id="profile_pic" src={profilePic} className="rounded-circle user_img_msg" alt="profile" />
                                 <button
                                     type="button"
                                     className="btn btn-outline-secondary"
