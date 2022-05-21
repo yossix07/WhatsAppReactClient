@@ -46,7 +46,7 @@ Fields requirement in-depth:
 * Above the contacts list, you can see 3 buttons near your default profile picture. From left to right -
 * Add new contact - Upon clicking on it, a form modal will show up. You can enter the new contact's username, nickname and server. 
   When The "Add" button is clicked, the form will be submited.
-  In case the contact's server succesfully add the new chat, the chat will be created to the user.
+  In case the contact's server succesfully add the new chat, the chat will be created to the user. Otherwise, an error modal will be shown.
 * The search button - Once you click it, you can enter text in order to dynamically filter by it. Only contacts on your contacts list that the current input is a substring to thier nickname will appear on your contacts list(not a case sensitive filter).
 * Sign-Off - Once clicked on, a modal will appear to ask if you are sure you want to sign-out. You can choose your action by the relavent button.
 
