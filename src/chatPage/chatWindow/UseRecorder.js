@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { addRecordMessage } from "../../Users/UsersChatDB";
 
 const UseRecorder = (myUser, username, refreshChat, btnId) => {
   const [audioURL, setAudioURL] = useState("");
@@ -46,7 +45,7 @@ const UseRecorder = (myUser, username, refreshChat, btnId) => {
   const sendRecording = () => {
     const date = new Date();
     let time = ('0' + date.getHours()).slice(-2) + ":" + ('0' + date.getMinutes()).slice(-2);
-    addRecordMessage(myUser, username, audioURL, time);
+    // addRecordMessage(myUser, username, audioURL, time);
     document.getElementById(btnId.concat("-popoverBtn")).click();
     refreshChat();
     setRecorded(false);

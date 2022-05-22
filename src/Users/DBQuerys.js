@@ -18,19 +18,16 @@ export async function addNewUserAsync(username, password) {
 }
 
 export async function LogInAsync(username, password) {
-  console.log("username in LogInAsync is")
-    console.log(username)
   const requestOptions = {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ "id": username, "password": password })
   };
-
+  
   const response = await fetch(urlPrefix + "/LogIn", requestOptions);
+
   if (response.ok) {
     const token = await response.text();
-    console.log("token in LogInAsync is")
-    console.log(token)
     return token;
   }
   return -1;
@@ -39,9 +36,6 @@ export async function LogInAsync(username, password) {
 
 // get the user's contacts
 export async function getContactsAsync(token) {
-  console.log("token in getContactsAsync is:")
-  console.log(token);
-
   const requestOptions = {
     method: 'Get',
     headers: {
@@ -54,7 +48,6 @@ export async function getContactsAsync(token) {
 
   if(response.ok) {
     const json = await response.json()
-    console.log(json);
     return json;
   } else if(response.status == 401){
     return -1;
@@ -77,9 +70,6 @@ export async function getContactsMessagesAsync(token, contactId) {
   const response = await fetch(urlPrefix + "/contacts/" + contactId + "/messages", requestOptions);
   const json = await response.json()
 
-  console.log("Messages with " + contactId + " are: ");
-  console.log(json);
-
   return json;
 }
 
@@ -93,14 +83,10 @@ async function addToContactServer(from, to, server) {
   };
 
   const response = await fetch("http://" + server + "/api/invitations/", requestOptions);
-  console.log("response is: ");
-  console.log( response.ok);
   return response.ok;
 }
 
 async function addContactToMyServer(to, nickname, server, token) {
-  console.log("token is: ");
-  console.log(token);
   const requestOptions = {
     method: 'POST',
     headers: {
@@ -116,18 +102,19 @@ async function addContactToMyServer(to, nickname, server, token) {
 
 
 export async function addContactAsync(from, to, nickname, server, token) {
-  var result = await addToContactServer(from, to , server);
-  if (result) {
-    console.log("got in");
-    result = await addContactToMyServer(to, nickname, server, token);
-    console.log("result is:")
-    console.log(result);
-    if(result) {
-      return 1;
+  try {
+    var result = await addToContactServer(from, to , server);
+    if (result) {
+      result = await addContactToMyServer(to, nickname, server, token);
+      if(result) {
+        return 1;
+      }
+      return 0;
     }
-    return 0;
+    return -1;
+  } catch {
+    return -1;
   }
-  return -1;
 }
 
 async function addMessageToContactServer(from, to, server, content) {
@@ -140,8 +127,6 @@ async function addMessageToContactServer(from, to, server, content) {
   };
 
   const response = await fetch("http://" + server + "/api/transfer/", requestOptions);
-  console.log("response is: ");
-  console.log( response.ok);
   return response.ok;
 }
 
@@ -156,18 +141,13 @@ async function addMessageToMyServer(to, server, content, token) {
   };
 
   const response = await fetch("http://" + server + "/api/Contacts/" + to + "/Messages", requestOptions);
-  console.log("response is: ");
-  console.log( response.ok);
   return response.ok;
 }
 
 export async function sendMessage(from, to, server, content, token) {
   var result = await addMessageToContactServer(from, to , server, content);
   if (result) {
-    console.log("got in");
     result = await addMessageToMyServer(to, server, content, token);
-    console.log("result is:")
-    console.log(result);
     if(result) {
       return 1;
     }

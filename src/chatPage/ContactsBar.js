@@ -1,6 +1,5 @@
 import { Accordion, Card, useAccordionButton } from "react-bootstrap";
-import { useRef, useState, useEffect } from "react";
-import { validateAddContact } from "../Users/UsersChatDB";
+import { useRef, useState } from "react";
 import ProfilePicModal from "./ProfilePicModal";
 import profilePic from "../Users/ProfilePictures/DefalutProfilePic.jpg";
 import SignOffModal from "./SignOffModal";
@@ -22,19 +21,6 @@ function SearchAwareToggle({ children, eventKey, callback }) {
             <i className="bi bi-search"></i>
         </button>
     );
-}
-
-function validateAddContactKeyUp(username, talkWith) {
-    var errorMsg = validateAddContact(username, talkWith);
-    if (errorMsg === "") {
-        document.getElementById("add-contact-input").classList.add('is-valid');
-        document.getElementById("add-contact-input").classList.remove('is-invalid');
-        return true;
-    }
-    document.getElementById("addContactInvalidFeedback").innerHTML = errorMsg;
-    document.getElementById("add-contact-input").classList.remove('is-valid');
-    document.getElementById("add-contact-input").classList.add('is-invalid');
-    return false;
 }
 
 function ContactsBar(props) {
@@ -68,13 +54,8 @@ function ContactsBar(props) {
 
     const addContactRef = useRef("");
 
-    useEffect(() => {
-        document.getElementById("add-contact-input").addEventListener("keyup", function (event) { validateAddContactKeyUp(props.myUser, addContactRef.current.value); })
-    }, [props.myUser])
-
     const searchContact = function () {
         props.doSearch(props.searchBox.current.value);
-        // props.refreshContactList();
     }
 
     return (

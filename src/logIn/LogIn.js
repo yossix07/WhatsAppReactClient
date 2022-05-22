@@ -23,7 +23,6 @@ function LogIn(props) {
 
   $(document).ready(function () {
     $("#logInForm").unbind().on("submit", async function (event) {
-      console.log("loggin in")
       event.preventDefault();
       var token = await LogInAsync(name.current.value, pass.current.value);
       if(token != -1) {

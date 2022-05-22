@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes, } from "react-router-dom";
 import LogIn from './logIn/LogIn';
 import SignUp from './signUp/SignUpMain';
 import ChatPage from "./chatPage/ChatPage";
 import AuthorizationErrorModal from "./GenericErrorModal";
 import "./App.css"
+import * as signalR from "@microsoft/signalr";
+
 
 function App() {
 
@@ -13,7 +15,7 @@ function App() {
   const changeUsername = (user) => {
     setUsername(user);
     localStorage.setItem("username", user);
-    console.log(localStorage.getItem("username"))
+    setHub(user);
   }
 
   const [token, setToken] = useState("");
@@ -21,7 +23,6 @@ function App() {
   const changeToken = (t) => {
     setToken(t);
     localStorage.setItem("token", t);
-    console.log(localStorage.getItem("token"))
   }
 
   const [isAuthorizationModalOpen, setIsErrorModalOpen] = useState(false);
@@ -33,18 +34,29 @@ function App() {
     setIsErrorModalOpen(false);
   };
 
+  const [connection, setConnection] = useState(null);
+  async function setHub(user) {
+    const connection = new signalR.HubConnectionBuilder()
+      .withUrl("http://localhost:5146/myHub")
+      .build();
+    await connection.start().then(() => {
+      setConnection(connection);
+      connection.invoke("Connect", user);
+    })
+  }
+
   return (
     <>
       <BrowserRouter>
         <AuthorizationErrorModal isOpen={isAuthorizationModalOpen} hideModal={hideErrorModal}></AuthorizationErrorModal>
         <Routes>
-          <Route path="/" element={<LogIn setToken={changeToken} setUsername={changeUsername}/>}></Route>
+          <Route path="/" element={<LogIn setToken={changeToken} setUsername={changeUsername} />}></Route>
 
-          <Route path="/signup" element={<SignUp setToken={changeToken} setUsername={changeUsername}/>}></Route>
+          <Route path="/signup" element={<SignUp setToken={changeToken} setUsername={changeUsername} />}></Route>
 
           <Route path="/chat" element={<ChatPage token={localStorage.getItem("token")}
             setToken={changeToken} user={localStorage.getItem("username")} setUsername={changeUsername}
-            showAuthorizationErrorModal={showErrorModal}/>}></Route>
+            showAuthorizationErrorModal={showErrorModal} connection={connection}/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

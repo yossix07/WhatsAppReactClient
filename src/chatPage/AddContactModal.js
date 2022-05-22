@@ -22,23 +22,8 @@ function AddContactModal(props) {
 
         $("#addContactForm").unbind("submit").on("submit", async function (event) {
             event.preventDefault();
-            console.log("good");
             const result = await addContactAsync(props.myUser, contactUsername.current.value,
                 contactNickname.current.value, contactServer.current.value, props.token);
-                
-            if(props.connection.connectionStarted) {
-                await props.connection?.invoke("ContactsRefreshReceived", props.myUser, props.getRefresh);
-
-            }
-
-            // props.addContact(
-            //          {
-            //              "id":contactUsername.current.value ,
-            //              "name":contactNickname.current.value,
-            //              "server": contactServer.current.value,
-            //              "last": null,
-            //              "lastdate": null
-            //          })
             if (result == 1) {
                 props.hideModal();
             } else {
@@ -48,16 +33,15 @@ function AddContactModal(props) {
         });
     });
 
-
     const [isErrorModelOpen, setIsErrorModelOpen] = useState(false);
 
     const showError = () => {
-        document.getElementById("addContactModal").setAttribute("hidden", "");
+        document.getElementById("addContactModal")?.setAttribute("hidden", "");
         setIsErrorModelOpen(true);
     };
     const hideError = () => {
         setIsErrorModelOpen(false);
-        document.getElementById("addContactModal").removeAttribute("hidden", "");
+        document.getElementById("addContactModal")?.removeAttribute("hidden", "");
     };
 
 

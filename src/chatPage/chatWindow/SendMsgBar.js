@@ -1,5 +1,4 @@
 import { useRef, useState } from "react";
-import { addVideoMessage, addTextMessage, addPictureMessage } from "../../Users/UsersChatDB";
 import { OverlayTrigger, Popover } from "react-bootstrap"
 import $ from "jquery";
 import InvalidFileModal from "../../InvalidFileModal";
@@ -15,7 +14,7 @@ function SendMsgBar(props) {
 
     const textMsg = useRef("");
 
-    $(document).ready(function (event) {
+    $(document).ready(function () {
 
         // send media handler (close record popup)
         $(document).unbind("click").on("click", function (e) {
@@ -31,14 +30,13 @@ function SendMsgBar(props) {
         // click enter handler (send message)
         $("#".concat(btnId).concat("-msg-input")).unbind().bind("keypress", function (e) {
             if (e.keyCode === 13) {
-                console.log("sending msg");
                 document.getElementById(btnId.concat("-msg")).click();
             }
         })
 
-        // $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
-        //     $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
-        // });
+        $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
+            $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
+        });
 
         // send message handler
         $("#".concat(btnId).concat("-msg")).unbind("click").on("click",async function () {
@@ -89,7 +87,7 @@ function SendMsgBar(props) {
         if (validatePic(e.target.files[0])) {
             const date = new Date();
             let time = date.getHours() + ":" + date.getMinutes();
-            addPictureMessage(props.myUser, props.contactUsername, URL.createObjectURL(e.target.files[0]), time);
+            // addPictureMessage(props.myUser, props.contactUsername, URL.createObjectURL(e.target.files[0]), time);
             props.refreshChat();
         }
         else {
@@ -120,7 +118,7 @@ function SendMsgBar(props) {
         if (validateVid(e.target.files[0])) {
             const date = new Date();
             let time = date.getHours() + ":" + date.getMinutes();
-            addVideoMessage(props.myUser, props.contactUsername, URL.createObjectURL(e.target.files[0]), time);
+            // addVideoMessage(props.myUser, props.contactUsername, URL.createObjectURL(e.target.files[0]), time);
             props.refreshChat();
         } else {
             setModalText("Video format must be one of the following: mp4/mkv/avi/wmv/mov/flv");

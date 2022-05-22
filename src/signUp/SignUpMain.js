@@ -2,12 +2,11 @@ import React, { useEffect, useRef, useState } from "react";
 import "./SignUp.css";
 import SignUpForm from "./SignUpForm";
 import SignUpSuccess from "./SignUpSuccess";
+import SignUpFail from "./SignUpFail";
 import { validateUsername, validatePassword, validateRepeatedPassword, validatePic } from "./Validation";
 import { addNewUserAsync } from "../Users/DBQuerys";
-import { addUserWithEmptyChats } from "../Users/UsersChatDB";
 import $ from "jquery";
 import InvalidFileModal from "../InvalidFileModal";
-import defalutProfilePic from "../Users/ProfilePictures/DefalutProfilePic.jpg"
 
 function SignUp(props) {
   const [file, setFile] = useState();
@@ -43,6 +42,15 @@ function SignUp(props) {
     setIsSignUpSuccesModalOpen(false);
   };
 
+  const [isSignUpFailModalOpen, setIsSignUpFailModalOpen] = useState(false);
+
+  const showSignUpFailModal = () => {
+    setIsSignUpFailModalOpen(true);
+  };
+  const hideSignUpFailModal = () => {
+    setIsSignUpFailModalOpen(false);
+  };
+
 
   const name = useRef("");
   const pass = useRef("");
@@ -60,9 +68,8 @@ function SignUp(props) {
             props.setToken(token);
             props.setUsername(name.current.value);
             showSignUpSuccesModal();
-            
           } else {
-            // TODO - failed to register
+            showSignUpFailModal();
           }
         
       }
@@ -90,6 +97,7 @@ function SignUp(props) {
     <div>
       <InvalidFileModal isOpen={isInvalidFileModalOpen} hideModal={hideInvalidPicModal} text="Picture format must be one of the following: jpg/jpeg/png/svg"></InvalidFileModal>
       <SignUpSuccess isOpen={isSignUpSuccesModalOpen} hideModal={hideSignUpSuccesModal} name={name.current.value}></SignUpSuccess>
+      <SignUpFail isOpen={isSignUpFailModalOpen} hideModal={hideSignUpFailModal} ></SignUpFail>
       <SignUpForm name={name} pass={pass} rePass={rePass} 
         file={file} fileUpload={fileUpload} removePicture={removePicture}></SignUpForm>
     </div>

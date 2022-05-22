@@ -7,7 +7,6 @@ import { getContactsMessagesAsync } from "../../Users/DBQuerys";
 import $ from "jquery";
 import { useEffect, useState} from "react";
 import profilePic from "../../Users/ProfilePictures/DefalutProfilePic.jpg"
-import * as signalR from "@microsoft/signalr";
 
 
 function ChatWindow(props) {
@@ -15,44 +14,36 @@ function ChatWindow(props) {
     const msgContainerId = props.myUser.concat("-").concat(props.user).concat("-msg-container");
     const msgTabPaneId = props.myUser.concat("-").concat(props.user).concat("-msg-tab-pane");
 
-    $(document).unbind().ready(async function (event) {
+    const connection = props.connection;
 
-        // var connection = new signalR.HubConnectionBuilder().withUrl("http://localhost:5146/myHub").build();
-
-        // await connection.start({ withCredentials: false }).then(() => {
-        //     console.log("SignalR Coneected!");
-        //     console.log(connection);
-        // }).catch((e) => {
-        //     console.log(e);
-        // });
-
-        // connection.on("MessageChangeRecieved", (contact, msg) => {
-        //     let mesgs = messages;
-        //     mesgs?.push(msg);
-        //     setMessages(mesgs);
-        //     props.editContact(contact);
-        // });
-
-        // await connection.invoke("Connect", props.myUser);
-
+    $(document).unbind().ready(async function() {
         $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
             $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
         });
     });
 
-
-    const [messages, setMessages] = useState(null);
+    const [messages, setMessages] = useState([]);
 
     useEffect(()=> { 
         async function fetchMessages() {
             setMessages(await getContactsMessagesAsync(props.token, props.contactName));
         }
         fetchMessages();
-
-        console.log("Messages in use effect: ")
-        console.log(messages);
-        
     }, []);
+
+    async function listToMessages() {
+        await connection.on("MessageChangeRecieved", (contact, msg) => {
+            if(contact.id != props.contactName) {
+                return;
+            } else {
+                let msgs = [...messages];
+                msgs?.push(msg);
+                setMessages(msgs);
+                props.editContact(contact);
+            }
+        });
+    }
+    listToMessages();
 
     //get all messages of user (sender and reciever)
     if(messages) {

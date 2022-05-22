@@ -1,10 +1,7 @@
-import { doesUserExist } from "../Users/UsersDB";
-
 export const validateUsername = (name) => {
     if ((!(validateSpaces(name, "usernameInvalidFeedback", "Username must be one word!", "SignUpUsername")))
         || (!(validateLength(name, 2, "usernameInvalidFeedback", "Username must contain at least two characters!", "SignUpUsername"))
-            || (!(doesContainHyphen(name, "usernameInvalidFeedback", "Username must not contain - or _ characters!", "SignUpUsername")))
-            || (!(validateUniqueUsername(name, "usernameInvalidFeedback", "Username alreay exists!", "SignUpUsername"))))) {
+            || (!(doesContainHyphen(name, "usernameInvalidFeedback", "Username must not contain - or _ characters!", "SignUpUsername"))))) {
         return false;
     }
     return true;
@@ -29,18 +26,6 @@ export const validateRepeatedPassword = (pass, rePass) => {
     }
     document.getElementById("SignUpRePassword").classList.remove('is-invalid');
     document.getElementById("SignUpRePassword").classList.add('is-valid');
-    return true;
-}
-
-export const validateUniqueUsername = (str, errorId, errorHtml, parentId) => {
-    if (doesUserExist(str)) {
-        document.getElementById(errorId).innerHTML = errorHtml;
-        document.getElementById(parentId).classList.remove('is-valid');
-        document.getElementById(parentId).classList.add('is-invalid');
-        return false;
-    }
-    document.getElementById(parentId).classList.add('is-valid');
-    document.getElementById(parentId).classList.remove('is-invalid');
     return true;
 }
 

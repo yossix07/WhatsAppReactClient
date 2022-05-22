@@ -1,5 +1,4 @@
 import Modal from "react-bootstrap/Modal";
-import { setProfilePicture } from "../Users/UsersDB";
 import InvalidFileModal from "../InvalidFileModal";
 import { useState } from "react";
 
@@ -13,7 +12,7 @@ function ProfilePicModal(props) {
         props.hideModal();
 
         if (validatePic(e.target.files[0])) {
-            setProfilePicture(props.myUser, URL.createObjectURL(e.target.files[0]));
+            // setProfilePicture
         } else {
             showError();
         }
