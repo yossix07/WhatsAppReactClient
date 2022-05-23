@@ -8,7 +8,7 @@
 - $ npm install react-router-dom
 - $ npm install jquery
 - $ npm install @microsoft/signalr
-- $ Only if there is a recommendation, do: npm audit fix --force
+- Only if there is a recommendation to do so, enter: $ npm audit fix --force
 - Make sure to start the Web Api side. You can follow the instructions on here: https://github.com/OsherElhadad/WhatsAppApiServer
 - Make sure to start the Ratings side. You can follow the instructions on here: https://github.com/OsherElhadad/WhatsAppRating
 
