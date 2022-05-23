@@ -13,10 +13,9 @@
 - Make sure to start the Ratings side. You can follow the instructions on here: https://github.com/OsherElhadad/WhatsAppRating
 
 
-Now you are ready to start!
-In oreder to open the website, go to the cloned folder on the CLI and enter the command :
-$ npm start
-<br>
+Now you are ready to start! <br>
+In oreder to open the website, go to the cloned folder on the CLI and enter the command : <br>
+$ npm start <br>
 All you need to do now is to wait for the website to open on you browser.
 
 ## Log-In Page
