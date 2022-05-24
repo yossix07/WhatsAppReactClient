@@ -46,7 +46,7 @@ Fields requirement in-depth:
 * In case of entering this page via url (http://localhost:3000/chat) and not via log-in, you will be redirected to login screen with a pop-up modal.
 
 * Once you logged-in, your contacts list will appear on the left side.
-* Upon refresh(F5) in this page, you will stay logged-in to your user.
+
 * Above the contacts list, you can see 3 buttons near your default profile picture. From left to right -
 * Add new contact - Upon clicking on it, a form modal will show up. You can enter the new contact's username, nickname and server. 
   When The "Add" button is clicked, the form will be submited.
@@ -55,6 +55,8 @@ Fields requirement in-depth:
 * Sign-Off - Once clicked on, a modal will appear to ask if you are sure you want to sign-out. You can choose your action by the relavent button.
 
 As for the chat itself - In order to open a chat just click on the desired contact!
-* Upon sending a new message or hoevring on the chat window, it will auto scroll to display the lastest messages in the current chat. 
+* Upon hoevring on the chat window, it will auto scroll to display the lastest messages in the current chat. 
 * You can send text messages by clicking on the envelope button or pressing the "Enter" key. You can't send an empty message.
 * The microphone, video and picture buttons are disabled as it is not required in this assignment.
+
+* Upon refresh(F5) in this page, you will stay logged-in to your user on readonly mode - you can log off with the relavent button and reconnect in order to send and  recive messages.
