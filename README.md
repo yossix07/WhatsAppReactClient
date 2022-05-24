@@ -43,7 +43,7 @@ Fields requirement in-depth:
 
 ## Chats Page
 
-! In case of entering this page via url (http://localhost:3000/chat) and not via log-in, you will be redirected to login screen with a pop-up modal.
+* In case of entering this page via url (http://localhost:3000/chat) and not via log-in, you will be redirected to login screen with a pop-up modal.
 
 * Once you logged-in, your contacts list will appear on the left side.
 * Upon refresh(F5) in this page, you will stay logged-in to your user.
