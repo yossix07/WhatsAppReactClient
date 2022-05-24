@@ -43,7 +43,10 @@ Fields requirement in-depth:
 
 ## Chats Page
 
+! In case of entering this page via url (http://localhost:3000/chat) and not via log-in, you will be redirected to login screen with a pop-up modal.
+
 * Once you logged-in, your contacts list will appear on the left side.
+* Upon refresh(F5) in this page, you will stay logged-in to your user.
 * Above the contacts list, you can see 3 buttons near your default profile picture. From left to right -
 * Add new contact - Upon clicking on it, a form modal will show up. You can enter the new contact's username, nickname and server. 
   When The "Add" button is clicked, the form will be submited.
