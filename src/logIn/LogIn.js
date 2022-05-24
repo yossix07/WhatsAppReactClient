@@ -24,9 +24,9 @@ function LogIn(props) {
   $(document).ready(function () {
     $("#logInForm").unbind().on("submit", async function (event) {
       event.preventDefault();
-      var token = await LogInAsync(name.current.value, pass.current.value);
+      var token = await LogInAsync(name?.current?.value, pass?.current?.value);
       if(token != -1) {
-        props.setUsername(name.current.value);
+        props.setUsername(name?.current?.value);
         props.setToken(token);
         navigate("/chat", { replace: true });
       } else {

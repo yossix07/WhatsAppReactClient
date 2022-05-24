@@ -4,7 +4,6 @@ function AddContactErrorModal(props) {
 
     const onCancel = () => {
         document.getElementById("addContactModal").setAttribute("animation","false");
-        console.log(document.getElementById("addContactModal").getAttribute("animation"));
         props.hideModal();
         props.hideErrorModal();
         

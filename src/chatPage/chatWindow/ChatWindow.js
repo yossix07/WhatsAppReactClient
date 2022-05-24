@@ -7,15 +7,10 @@ import { getContactsMessagesAsync } from "../../Users/DBQuerys";
 import $ from "jquery";
 import { useEffect, useState} from "react";
 import profilePic from "../../Users/ProfilePictures/DefalutProfilePic.jpg"
-import * as signalR from "@microsoft/signalr";
-
 
 function ChatWindow(props) {
     const connection = props.connection;
-
-    console.log(connection);
     
-
     const msgContainerId = props.myUser.concat("-").concat(props.user).concat("-msg-container");
     const msgTabPaneId = props.myUser.concat("-").concat(props.user).concat("-msg-tab-pane");
 
@@ -39,7 +34,6 @@ function ChatWindow(props) {
             return;
         }
         await connection?.on("MessageChangeRecieved", (contact, msg) => {
-            console.log("got msg")
             if(contact.id != props.contactName) {
                 return;
             } else {
