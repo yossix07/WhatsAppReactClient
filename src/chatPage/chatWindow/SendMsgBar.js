@@ -29,13 +29,14 @@ function SendMsgBar(props) {
 
         // click enter handler (send message)
         $("#".concat(btnId).concat("-msg-input")).unbind().bind("keypress", function (e) {
+            $("#".concat(msgContainerId))?.animate({ scrollTop: $("#".concat(msgContainerId))?.get(0)?.scrollHeight }, 'slow');
             if (e.keyCode === 13) {
                 document.getElementById(btnId.concat("-msg")).click();
             }
         })
 
         $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
-            $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
+            $("#".concat(msgContainerId))?.animate({ scrollTop: $("#".concat(msgContainerId))?.get(0)?.scrollHeight }, 'slow');
         });
 
         // send message handler
@@ -45,7 +46,7 @@ function SendMsgBar(props) {
             props.refreshChat();
             textMsg.current.value = "";
             $("#".concat(btnId).concat("-msg")).prop('disabled', $("#".concat(btnId).concat("-msg-input")).val() === "");
-            $("#".concat(msgContainerId)).animate({ scrollTop: $("#".concat(msgContainerId)).get(0).scrollHeight }, 'slow');
+            $("#".concat(msgContainerId))?.animate({ scrollTop: $("#".concat(msgContainerId))?.get(0)?.scrollHeight }, 'slow');
         })
 
         // disable the send button if there is no text
