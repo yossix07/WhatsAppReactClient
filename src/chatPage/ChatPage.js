@@ -11,7 +11,9 @@ import $ from "jquery";
 import { useNavigate } from "react-router-dom";
 
 function ChatPage(props) {
+
     const connection = props.connection;
+
     const [refresh, setRefresh] = useState(0);
 
     const refreshChat = () => {
@@ -29,12 +31,14 @@ function ChatPage(props) {
         setContactsList(cont);
     }
 
-    
+
 
     async function listenToNewContacts() {
-        await connection?.on("ContactChangeRecieved", (contact) => {
-            addContact(contact);
-        });
+        if (connection != false) {
+            await connection?.on("ContactChangeRecieved", (contact) => {
+                addContact(contact);
+            });
+        }
     }
     listenToNewContacts();
 

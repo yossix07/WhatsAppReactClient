@@ -14,7 +14,7 @@ function App() {
 
   const changeUsername = (user) => {
     setUsername(user);
-    localStorage.setItem("username", user);
+    sessionStorage.setItem("username", user);
     setHub(user);
   }
 
@@ -22,7 +22,7 @@ function App() {
 
   const changeToken = (t) => {
     setToken(t);
-    localStorage.setItem("token", t);
+    sessionStorage.setItem("token", t);
   }
 
   const [isAuthorizationModalOpen, setIsErrorModalOpen] = useState(false);
@@ -54,9 +54,9 @@ function App() {
 
           <Route path="/signup" element={<SignUp setToken={changeToken} setUsername={changeUsername} />}></Route>
 
-          <Route path="/chat" element={<ChatPage token={localStorage.getItem("token")}
-            setToken={changeToken} user={localStorage.getItem("username")} setUsername={changeUsername}
-            showAuthorizationErrorModal={showErrorModal} connection={connection} setHub={setHub}/>}></Route>
+          <Route path="/chat" element={<ChatPage token={sessionStorage.getItem("token")}
+            setToken={changeToken} user={sessionStorage.getItem("username")} setUsername={changeUsername}
+            showAuthorizationErrorModal={showErrorModal} connection={connection}/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

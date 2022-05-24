@@ -11,27 +11,9 @@ import * as signalR from "@microsoft/signalr";
 
 
 function ChatWindow(props) {
-    const [connection, setConnection] = useState(props.connection);
+    const connection = props.connection;
 
-    if(connection == null) {
-        setConnection(false);
-    }
-
-    useEffect(() => {
-        async function setHub(user) {
-            const connection = new signalR.HubConnectionBuilder()
-              .withUrl("http://localhost:5146/myHub")
-              .build();
-            await connection.start().then(() => {
-                setConnection(connection);
-              connection.invoke("Connect", user);
-            })
-        }
-
-        if (connection == false && props.myUser != null) {
-            setHub(props.myUser);
-        }
-    }, [connection])
+    console.log(connection);
     
 
     const msgContainerId = props.myUser.concat("-").concat(props.user).concat("-msg-container");
@@ -57,6 +39,7 @@ function ChatWindow(props) {
             return;
         }
         await connection?.on("MessageChangeRecieved", (contact, msg) => {
+            console.log("got msg")
             if(contact.id != props.contactName) {
                 return;
             } else {
