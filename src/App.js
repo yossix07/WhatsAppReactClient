@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Routes, } from "react-router-dom";
 import LogIn from './logIn/LogIn';
 import SignUp from './signUp/SignUpMain';
 import ChatPage from "./chatPage/ChatPage";
-import AuthorizationErrorModal from "./GenericErrorModal";
+import AuthorizationErrorModal from "./AuthorizationErrorModal";
 import "./App.css"
 import * as signalR from "@microsoft/signalr";
 
@@ -56,7 +56,7 @@ function App() {
 
           <Route path="/chat" element={<ChatPage token={localStorage.getItem("token")}
             setToken={changeToken} user={localStorage.getItem("username")} setUsername={changeUsername}
-            showAuthorizationErrorModal={showErrorModal} connection={connection}/>}></Route>
+            showAuthorizationErrorModal={showErrorModal} connection={connection} setHub={setHub}/>}></Route>
         </Routes>
       </BrowserRouter>
     </>

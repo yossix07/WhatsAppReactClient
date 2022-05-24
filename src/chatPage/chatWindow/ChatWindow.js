@@ -7,14 +7,35 @@ import { getContactsMessagesAsync } from "../../Users/DBQuerys";
 import $ from "jquery";
 import { useEffect, useState} from "react";
 import profilePic from "../../Users/ProfilePictures/DefalutProfilePic.jpg"
+import * as signalR from "@microsoft/signalr";
 
 
 function ChatWindow(props) {
+    const [connection, setConnection] = useState(props.connection);
+
+    if(connection == null) {
+        setConnection(false);
+    }
+
+    useEffect(() => {
+        async function setHub(user) {
+            const connection = new signalR.HubConnectionBuilder()
+              .withUrl("http://localhost:5146/myHub")
+              .build();
+            await connection.start().then(() => {
+                setConnection(connection);
+              connection.invoke("Connect", user);
+            })
+        }
+
+        if (connection == false && props.myUser != null) {
+            setHub(props.myUser);
+        }
+    }, [connection])
+    
 
     const msgContainerId = props.myUser.concat("-").concat(props.user).concat("-msg-container");
     const msgTabPaneId = props.myUser.concat("-").concat(props.user).concat("-msg-tab-pane");
-
-    const connection = props.connection;
 
     $(document).unbind().ready(async function() {
         $("#".concat(msgContainerId)).unbind("mouseenter keydown").on("mouseenter keydown", function (e) {
@@ -32,7 +53,10 @@ function ChatWindow(props) {
     }, []);
 
     async function listToMessages() {
-        await connection.on("MessageChangeRecieved", (contact, msg) => {
+        if(connection == false) {
+            return;
+        }
+        await connection?.on("MessageChangeRecieved", (contact, msg) => {
             if(contact.id != props.contactName) {
                 return;
             } else {
